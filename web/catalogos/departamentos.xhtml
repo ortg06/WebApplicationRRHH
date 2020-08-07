@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Catalogos Departamentos</title>
+    </h:head>
+    <h:body>
+        <h1>Catalogo de Departamentos</h1>
+        <p:growl id="messages" globalOnly="true" showDetail="true" showSummary="true"/>
+        <h:form id="formDepartamento">
+            <p:dataTable var="dep" value="#{departamentoManejador.departamentoList}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{dep.dpId}"/>
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{dep.dpNombre}"/>
+                </p:column>
+                <p:column style="width:32px;text-align: center">
+                    <p:commandButton update=":formDetalleDepartamento" oncomplete="PF('departamentoDialog').show()" icon="pi pi-search" title="Ver">
+                        <f:setPropertyActionListener value="#{dep}" target="#{departamentoManejador.departamento}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+            
+            <p:commandButton value="Nuevo" actionListener="#{departamentoManejador.nuevoDepartamento()}" process="@this" 
+                             update=":formNuevoDepartamento" oncomplete="PF('departamentoNuevoDialog').show()"/>
+        </h:form>
+
+        <h:form id="formNuevoDepartamento">
+
+            <p:dialog id="dialogNuevoDepartamento" widgetVar="departamentoNuevoDialog" modal="true" header="Nuevo Departamento" resizable="true" height="40%" position="center">
+                <p:panelGrid columns="2">
+              
+                    <h:outputText value="Nombre:"/>
+                    <h:inputText value="#{departamentoManejador.departamento.dpNombre}"/>
+                   
+                    <p:commandButton value="Guardar" actionListener="#{departamentoManejador.guardarDepartamento()}" process="@form" update=":messages :formDepartamento" 
+                                     onsuccess="PF('departamentoDialog').hide()"/>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+        
+        
+         <h:form id="formDetalleDepartamento">
+
+            <p:dialog id="dialogDetalleDepartamento" widgetVar="departamentoDialog" modal="true" header="Detalle de Departamento" resizable="true" height="40%" position="center">
+                <p:panelGrid columns="2">
+              <h:outputText value="ID:"/>
+                    <h:inputText value="#{departamentoManejador.departamento.dpId}"/>
+                    <h:outputText value="Nombre:"/>
+                    <h:inputText value="#{departamentoManejador.departamento.dpNombre}"/>
+                   <h:outputText value="Usuario Creación:"/>
+                   <h:inputText value="#{departamentoManejador.departamento.AUsuarioCreacion}"/>
+                    <p:commandButton value="Eliminar" actionListener="#{departamentoManejador.eliminarDepartamento()}" process="@this" update=":messages :formDepartamento" 
+                                     onsuccess="PF('departamentoDialog').hide()"/>
+                    <p:commandButton value="Guardar" actionListener="#{departamentoManejador.guardarDepartamento()}" process="@form" update=":messages :formDepartamento" 
+                                     onsuccess="PF('departamentoDialog').hide()"/>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+
+        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <h:outputLabel value="CARGANDO...."/>    
+        </p:dialog>
+
+    </h:body>
+</html>
+

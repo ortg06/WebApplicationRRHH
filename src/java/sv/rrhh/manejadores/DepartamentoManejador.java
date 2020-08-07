@@ -29,7 +29,6 @@ public class DepartamentoManejador {
     private DepartamentoController departamentoController = new DepartamentoController();
     private List<Departamento> departamentoList;
 
-    
   
     @PostConstruct
     public void cargarDatos(){

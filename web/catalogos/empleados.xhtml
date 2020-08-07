@@ -19,14 +19,20 @@
                 <p:column headerText="Nombre">
                     <h:outputText value="#{emp.emNombre}"/>
                 </p:column>
-                 <p:column headerText="Apellido">
-                     <h:outputText value="#{emp.emApellidos}"/>
+                <p:column headerText="Apellido">
+                    <h:outputText value="#{emp.emApellidos}"/>
                 </p:column>
-                 <p:column headerText="Departamento">
-                     <h:outputText value="#{emp.dpId}"/>
+                <p:column headerText="Puesto">
+                    <h:outputText value="#{emp.caId.caNombre}"/>
                 </p:column>
-                 <p:column headerText="Fecha Contratación">
-                     <h:outputText value="#{emp.emFechaContratado}"/>
+                <p:column headerText="Tipo de Empleo">
+                    <h:outputText value="#{emp.tpId.tpNombre}"/>
+                </p:column>
+                <p:column headerText="Estado">
+                    <h:outputText value="#{emp.stId.stNombre}"/>
+                </p:column>
+                <p:column headerText="Fecha Contratación">
+                    <h:outputText value="#{emp.emFechaContratado}"/>
                 </p:column>
                 <p:column style="width:32px;text-align: center">
                     <p:commandButton update=":formDetalleEmpleado" oncomplete="PF('empleadoDialog').show()" icon="pi pi-search" title="Ver">
@@ -34,7 +40,7 @@
                     </p:commandButton>
                 </p:column>
             </p:dataTable>
-            
+
             <p:commandButton value="Nuevo" actionListener="#{empleadoManejador.nuevoEmpleado()}" process="@this" 
                              update=":formNuevoEmpleado" oncomplete="PF('empleadoNuevoDialog').show()"/>
         </h:form>
@@ -43,41 +49,47 @@
 
             <p:dialog id="dialogNuevoEmpleado" widgetVar="empleadoNuevoDialog" modal="true" header="Nueva Contratación" resizable="true" height="40%" position="center">
                 <p:panelGrid columns="2">
-              
+
                     <h:outputText value="Nombre:"/>
                     <h:inputText value="#{empleadoManejador.empleado.emNombre}"/>
-                     <h:outputText value="Apellido:"/>
-                     <h:inputText value="#{empleadoManejador.empleado.emApellidos}"/>
-                     <h:outputText value="Estado:"/>
-                     <h:inputText value="#{empleadoManejador.empleado.stId}"/>
-                     <h:outputText value="Departamento:"/>
-                     <h:inputText value="#{empleadoManejador.empleado.dpId}"/>
-                     <h:outputText value="Tipo de Empleo:"/>
-                     <h:inputText value="#{empleadoManejador.empleado.tpId}"/>
-                      <h:outputText value="Fecha de nacimiento:"/>
-                      <p:calendar value="#{empleadoManejador.empleado.emFechaNacimiento}" pattern="yyyy/MM/dd"/>
-                     <h:outputText value="Fecha de contratación:"/>
-                     <p:calendar value="#{empleadoManejador.empleado.emFechaContratado}" pattern="yyyy/MM/dd"/>
+                    <h:outputText value="Apellido:"/>
+                    <h:inputText value="#{empleadoManejador.empleado.emApellidos}"/>
+                    <h:outputText value="Fecha de nacimiento:"/>
+                    <p:calendar value="#{empleadoManejador.empleado.emFechaNacimiento}" pattern="yyyy/MM/dd"/>
+                    <h:outputText value="Fecha de contratación:"/>
+                    <p:calendar value="#{empleadoManejador.empleado.emFechaContratado}" pattern="yyyy/MM/dd"/>
+                    <h:outputText value="Cargo:"/>
+                    <h:selectOneMenu  id="selectCargo" value="#{empleadoManejador.empleado.caId}" required="true">
+                        <f:selectItems value="#{empleadoManejador.cargoController.encontrarEntidades()}" 
+                                       var="cargo" itemLabel="#{cargo.caNombre}" itemValue="#{cargo}"/>
+                    </h:selectOneMenu>
+                    <h:outputText value="Tipo de Empleo:"/>
+                    <h:selectOneMenu  id="selectTipo" value="#{empleadoManejador.empleado.tpId}" required="true">
+                        <f:selectItems value="#{empleadoManejador.tipoEmpleoController.encontrarEntidades()}" 
+                                       var="tipo" itemLabel="#{tipo.tpNombre}" itemValue="#{tipo}"/>
+                    </h:selectOneMenu>
+                    <h:outputText value="Apellido:"/>
+                    <h:inputText value="#{empleadoManejador.empleado.emApellidos}"/>
                     <p:commandButton value="Guardar" actionListener="#{empleadoManejador.guardarEmpleado()}" process="@form" update=":messages :formEmpleado" 
                                      onsuccess="PF('empleadoNuevoDialog').hide()"/>
                 </p:panelGrid>
             </p:dialog>
         </h:form>
-        
-        
-         <h:form id="formDetalleEmpleado">
+
+
+        <h:form id="formDetalleEmpleado">
 
             <p:dialog id="dialogDetalleEmpleado" widgetVar="empleadoDialog" modal="true" header="Información de Empleado" resizable="true" height="40%" position="center">
                 <p:panelGrid columns="2">
-              <h:outputText value="ID:"/>
-              <h:inputText value="#{empleadoManejador.empleado.emNoEmpleado}"/>
+                    <h:outputText value="ID:"/>
+                    <h:inputText value="#{empleadoManejador.empleado.emNoEmpleado}"/>
                     <h:outputText value="Nombre:"/>
                     <h:inputText value="#{empleadoManejador.empleado.emNoEmpleado}"/>
-                   <h:outputText value="Usuario Creación:"/>
-                   <h:inputText value="#{empleadoManejador.empleado.emNoEmpleado}"/>
-                   <p:commandButton value="Eliminar" actionListener="#{empleadoManejador.eliminarEmpleado()}" process="@this" update=":messages :formEmpleado" 
+                    <h:outputText value="Usuario Creación:"/>
+                    <h:inputText value="#{empleadoManejador.empleado.emNoEmpleado}"/>
+                    <p:commandButton value="Eliminar" actionListener="#{empleadoManejador.eliminarEmpleado()}" process="@this" update=":messages :formEmpleado" 
                                      onsuccess="PF('empleadoDialog').hide()"/>
-                   <p:commandButton value="Guardar" actionListener="#{empleadoManejador.guardarEmpleado()}" process="@form" update=":messages :formEmpleado" 
+                    <p:commandButton value="Guardar" actionListener="#{empleadoManejador.guardarEmpleado()}" process="@form" update=":messages :formEmpleado" 
                                      onsuccess="PF('empleadoDialog').hide()"/>
                 </p:panelGrid>
             </p:dialog>

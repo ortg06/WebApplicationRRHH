@@ -9,6 +9,8 @@ package sv.rrhh.manejadores;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
+import sv.com.rrhh.controladores.UsuarioController;
+import sv.com.rrhh.entidades.Usuario;
 
 /**
  *
@@ -18,6 +20,8 @@ import javax.faces.bean.ManagedBean;
 @SessionScoped
 public class SesionUsuario implements Serializable {
 
+    private Usuario usuario;
+    private UsuarioController usuarioController;
     /**
      * Creates a new instance of SesionUsuario
      */

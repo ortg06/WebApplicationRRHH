@@ -5,21 +5,23 @@
  */
 package sv.rrhh.manejadores;
 
+
+import javax.faces.bean.SessionScoped;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 
 /**
  *
  * @author ortg_
  */
 @ManagedBean
-@ViewScoped
-public class DescuentosConfManejador {
+@SessionScoped
+public class SesionUsuario implements Serializable {
 
     /**
-     * Creates a new instance of DescuentosConf
+     * Creates a new instance of SesionUsuario
      */
-    public DescuentosConfManejador() {
+    public SesionUsuario() {
     }
     
 }

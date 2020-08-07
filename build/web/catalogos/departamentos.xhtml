@@ -39,7 +39,7 @@
                     <h:inputText value="#{departamentoManejador.departamento.dpNombre}"/>
                    
                     <p:commandButton value="Guardar" actionListener="#{departamentoManejador.guardarDepartamento()}" process="@form" update=":messages :formDepartamento" 
-                                     onsuccess="PF('departamentoDialog').hide()"/>
+                                     onsuccess="PF('departamentoNuevoDialog').hide()"/>
                 </p:panelGrid>
             </p:dialog>
         </h:form>

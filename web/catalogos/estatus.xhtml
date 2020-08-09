@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Catalogos Estados de Empleados</title>
+    </h:head>
+    <h:body>
+        <h1>Catalogo de Estados de Empleados</h1>
+         <h:form id="formEstados">
+            <p:dataTable var="st" value="#{estatusEmpleadoManejador.estatusEmpleadoList}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{st.stId}"/>
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{st.stNombre}"/>
+                </p:column>
+                <p:column style="width:32px;text-align: center">
+                    <p:commandButton update=":formDetalleEstado" oncomplete="PF('estatusDialog').show()" icon="pi pi-search" title="Ver">
+                        <f:setPropertyActionListener value="#{st}" target="#{estatusEmpleadoManejador.estatusEmpleado}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+            
+            <p:commandButton value="Nuevo" actionListener="#{estatusEmpleadoManejador.nuevoEstatus()}" process="@this" 
+                             update=":formNuevoEstado" oncomplete="PF('estadoNuevoDialog').show()"/>
+        </h:form>
+
+        <h:form id="formNuevoEstado">
+
+            <p:dialog id="dialogNuevoDescuento" widgetVar="estadoNuevoDialog" modal="true" header="Nuevo Descuento" resizable="true" height="40%" position="center">
+                <p:panelGrid columns="2">
+              
+                    <h:outputText value="Nombre:"/>
+                    <h:inputText value="#{estatusEmpleadoManejador.estatusEmpleado.stNombre}"/>
+                   
+                    <p:commandButton value="Guardar" actionListener="#{estatusEmpleadoManejador.guardarEstatus()}" process="@form" update=":messages :formEstados" 
+                                     onsuccess="PF('estadoNuevoDialog').hide()"/>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+        
+        
+         <h:form id="formDetalleEstado">
+
+            <p:dialog id="dialogDetalleDepartamento" widgetVar="estatusDialog" modal="true" header="Detalle de Departamento" resizable="true" height="40%" position="center">
+                <p:panelGrid columns="2">
+              <h:outputText value="ID:"/>
+              <h:inputText value="#{estatusEmpleadoManejador.estatusEmpleado.stId}"/>
+                    <h:outputText value="Nombre:"/>
+                    <h:inputText value="#{estatusEmpleadoManejador.estatusEmpleado.stNombre}"/>
+                   <h:outputText value="Usuario Creación:"/>
+                   <h:inputText value="#{estatusEmpleadoManejador.estatusEmpleado.AUsuarioCreacion}"/>
+                   <p:commandButton value="Eliminar" actionListener="#{estatusEmpleadoManejador.eliminarEstatus()}" update=":messages :formEstados" 
+                                     onsuccess="PF('estatusDialog').hide()"/>
+                   <p:commandButton value="Guardar" actionListener="#{estatusEmpleadoManejador.guardarEstatus()}" process="@form" update=":messages :formEstados" 
+                                     onsuccess="PF('estatusDialog').hide()"/>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+
+
+    </h:body>
+</html>
+
+

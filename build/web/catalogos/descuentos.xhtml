@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Catalogos Descuentos</title>
+    </h:head>
+    <h:body>
+        <h1>Catalogo de Descuentos</h1>
+        <h:form id="formDescuentos">
+            <p:dataTable var="desc" value="#{descuentosConfManejador.descuentosList}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{desc.dsId}"/>
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{desc.dsNombre}"/>
+                </p:column>
+                <p:column style="width:32px;text-align: center">
+                    <p:commandButton update=":formDetalleDescuento" oncomplete="PF('descuentoDialog').show()" icon="pi pi-search" title="Ver">
+                        <f:setPropertyActionListener value="#{desc}" target="#{descuentosConfManejador.descuentosConf}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+            
+            <p:commandButton value="Nuevo" actionListener="#{descuentosConfManejador.nuevoDescuento()}" process="@this" 
+                             update=":formNuevoDescuento" oncomplete="PF('descuentoNuevoDialog').show()"/>
+        </h:form>
+
+        <h:form id="formNuevoDescuento">
+
+            <p:dialog id="dialogNuevoDescuento" widgetVar="descuentoNuevoDialog" modal="true" header="Nuevo Descuento" resizable="true" height="40%" position="center">
+                <p:panelGrid columns="2">
+              
+                    <h:outputText value="Nombre:"/>
+                    <h:inputText value="#{descuentosConfManejador.descuentosConf.dsNombre}"/>
+                   
+                    <p:commandButton value="Guardar" actionListener="#{descuentosConfManejador.guardarDescuento()}" process="@form" update=":messages :formDescuentos" 
+                                     onsuccess="PF('descuentoNuevoDialog').hide()"/>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+        
+        
+         <h:form id="formDetalleDescuento">
+
+            <p:dialog id="dialogDetalleDepartamento" widgetVar="descuentoDialog" modal="true" header="Detalle de Departamento" resizable="true" height="40%" position="center">
+                <p:panelGrid columns="2">
+              <h:outputText value="ID:"/>
+              <h:inputText value="#{descuentosConfManejador.descuentosConf.dsId}"/>
+                    <h:outputText value="Nombre:"/>
+                    <h:inputText value="#{descuentosConfManejador.descuentosConf.dsNombre}"/>
+                   <h:outputText value="Usuario Creación:"/>
+                   <h:inputText value="#{descuentosConfManejador.descuentosConf.AUsuarioCreacion}"/>
+                   <p:commandButton value="Eliminar" actionListener="#{descuentosConfManejador.eliminarDescuento()}" process="@this" update=":messages :formDescuentos" 
+                                     onsuccess="PF('descuentoDialog').hide()"/>
+                   <p:commandButton value="Guardar" actionListener="#{descuentosConfManejador.guardarDescuento()}" process="@form" update=":messages :formDescuentos" 
+                                     onsuccess="PF('descuentoDialog').hide()"/>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+
+    </h:body>
+</html>
+
+

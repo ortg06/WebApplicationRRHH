@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Catalogos Descuentos</title>
+    </h:head>
+    <h:body>
+        <h1>Catalogo de Descuentos</h1>
+       <h:form id="formRoles">
+            <p:dataTable var="rol" value="#{rolManejador.rolList}">
+                <p:column headerText="Id">
+                    <h:outputText value="#{rol.rlId}"/>
+                </p:column>
+                <p:column headerText="Nombre">
+                    <h:outputText value="#{rol.rlNombre}"/>
+                </p:column>
+                <p:column style="width:32px;text-align: center">
+                    <p:commandButton update=":formDetalleRol" oncomplete="PF('rolDialog').show()" icon="pi pi-search" title="Ver">
+                        <f:setPropertyActionListener value="#{rol}" target="#{rolManejador.rol}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+            
+            <p:commandButton value="Nuevo" actionListener="#{rolManejador.nuevoRol()}" process="@this" 
+                             update=":formNuevoRol" oncomplete="PF('rolNuevoDialog').show()"/>
+        </h:form>
+
+        <h:form id="formNuevoRol">
+
+            <p:dialog id="dialogNuevoDescuento" widgetVar="rolNuevoDialog" modal="true" header="Nuevo Descuento" resizable="true" height="40%" position="center">
+                <p:panelGrid columns="2">
+              
+                    <h:outputText value="Nombre:"/>
+                    <h:inputText value="#{rolManejador.rol.rlNombre}"/>
+                   
+                    <p:commandButton value="Guardar" actionListener="#{rolManejador.guardarRol()}" process="@form" update=":messages :formRoles" 
+                                     onsuccess="PF('rolNuevoDialog').hide()"/>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+        
+        
+         <h:form id="formDetalleRol">
+
+            <p:dialog id="dialogDetalleDepartamento" widgetVar="rolDialog" modal="true" header="Detalle de Departamento" resizable="true" height="40%" position="center">
+                <p:panelGrid columns="2">
+              <h:outputText value="ID:"/>
+              <h:inputText value="#{rolManejador.rol.rlId}"/>
+                    <h:outputText value="Nombre:"/>
+                    <h:inputText value="#{rolManejador.rol.rlNombre}"/>
+                   <h:outputText value="Usuario Creación:"/>
+                   <h:inputText value="#{rolManejador.rol.AUsuarioCreacion}"/>
+                   <p:commandButton value="Eliminar" actionListener="#{rolManejador.eliminarRol()}" process="@this" update=":messages :formRoles" 
+                                     onsuccess="PF('rolDialog').hide()"/>
+                   <p:commandButton value="Guardar" actionListener="#{rolManejador.guardarRol()}" process="@form" update=":messages :formRoles" 
+                                     onsuccess="PF('rolDialog').hide()"/>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+
+
+    </h:body>
+</html>
+

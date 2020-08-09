@@ -15,12 +15,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import sv.com.rrhh.controladores.CargoController;
-import sv.com.rrhh.controladores.DepartamentoController;
+
 import sv.com.rrhh.controladores.EmpleadoController;
 import sv.com.rrhh.controladores.EstatusEmpleadoController;
 import sv.com.rrhh.controladores.TipoEmpleoController;
 import sv.com.rrhh.entidades.Cargo;
-import sv.com.rrhh.entidades.Departamento;
+
 import sv.com.rrhh.entidades.Empleado;
 import sv.com.rrhh.entidades.EstatusEmpleado;
 import sv.com.rrhh.entidades.TipoEmpleo;
@@ -37,11 +37,11 @@ public class EmpleadoManejador {
      * Creates a new instance of EmpleadoManejador
      */
     private Empleado empleado;
-    private EmpleadoController empleadoController = new EmpleadoController();
+    private final EmpleadoController empleadoController = new EmpleadoController();
     private List<Empleado> empleadoList;
-    private CargoController cargoController;
-    private TipoEmpleoController tipoEmpleoController;
-    private EstatusEmpleadoController estatusEmpleadoController;
+    private CargoController cargoController = new CargoController();
+    private TipoEmpleoController tipoEmpleoController = new TipoEmpleoController();
+    private EstatusEmpleadoController estatusEmpleadoController = new EstatusEmpleadoController();
     private Cargo cargo;
     private EstatusEmpleado estatusEmpleado;
     private TipoEmpleo tipoEmpleo;
@@ -72,18 +72,14 @@ public class EmpleadoManejador {
 
     public void nuevoEmpleado() {
         empleado = new Empleado();
-        try {
-            empleado.setStId(estatusEmpleadoController.encontrar(1));
-        } catch (Exception ex) {
-            Logger.getLogger(EmpleadoManejador.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public void guardarEmpleado() {
         try {
+            
             empleadoController.editar(empleado);
             FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Empleado " + empleado.getEmNombre() + " editado exitosamente", ""));
+                    new FacesMessage(FacesMessage.SEVERITY_INFO, "Empleado " + empleado.getEmNombre() + " guardado exitosamente", ""));
             cargarDatos();
         } catch (Exception ex) {
             FacesContext.getCurrentInstance().addMessage(null,

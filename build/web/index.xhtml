@@ -11,11 +11,16 @@
         BIENVENIDO AL SISTEMA DE RRHH
         <h:form>
             <p:panelMenu>
-                <p:submenu label="Opciones del sistema">
-                    <p:menuitem value="Departamentos" action="/catalogos/departamentos"/>        
+                <p:submenu label="Catalogos del Sistema">
+                    <p:menuitem value="Departamentos" action="/catalogos/departamentos"/>  
+                    <p:menuitem value="Descuentos" action="/catalogos/descuentos"/>        
+                    <p:menuitem value="Estatus" action="/catalogos/estatus"/>        
+                    <p:menuitem value="Roles" action="/catalogos/roles"/>        
+                    <p:menuitem value="Tipo de Empleo" action="/catalogos/tipoEmpleo"/>  
                 </p:submenu>
                 <p:submenu label="Gestión de RRHH">
-                    <p:menuitem value="Empleados" action="/catalogos/empleados"/>        
+                    <p:menuitem value="Empleados" action="/catalogos/empleados"/>  
+                    <p:menuitem value="Planilla" action="/catalogos/planilla"/> 
                 </p:submenu>
             </p:panelMenu>
         </h:form>

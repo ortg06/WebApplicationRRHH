@@ -48,15 +48,24 @@ public class SesionManejador{
     
     public void validarUsuario(){
         try {
-            Usuario user = usuarioController.encontrar(usuario);
-            if(user.getUsNombre().equals(usuario.getUsNombre()) 
+            Usuario user = usuarioController.encontrar(usuario.getUsId());
+            int codigo = user.getUsId();
+            System.out.println("usuario"+user.getUsNombre());
+            if( usuario.getUsId() == codigo
                     && user.getUsContraseña().equals(usuario.getUsContraseña())){
+                usuario.setRlId(user.getRlId());
                UtilidadesManejador.redireccion("index");
             }else{
-                UtilidadesManejador.lanzarMensajeError("Usuario Invalido", "El usuario o contraseña son incorrectos");
+                UtilidadesManejador.lanzarMensajeAdvertencia("Usuario Invalido", "El usuario o contraseña son incorrectos");
             }
         } catch (Exception ex) {
             Logger.getLogger(SesionManejador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void validarSesion(){
+        if(usuario.getRlId()==null){
+            UtilidadesManejador.redireccion("inicioSesion");
         }
     }
    

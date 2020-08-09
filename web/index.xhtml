@@ -3,31 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Formulario Departamento</title>
     </h:head>
     <h:body>
+        <ui:composition template="./plantillaPrincipal.xhtml">
+            
+            <ui:define name="content">
         BIENVENIDO AL SISTEMA DE RRHH
-        <h:form>
-            <p:panelMenu>
-                <p:submenu label="Catalogos del Sistema">
-                    <p:menuitem value="Departamentos" action="/catalogos/departamentos"/>  
-                    <p:menuitem value="Descuentos" action="/catalogos/descuentos"/>        
-                    <p:menuitem value="Estatus" action="/catalogos/estatus"/>        
-                    <p:menuitem value="Roles" action="/catalogos/roles"/>        
-                    <p:menuitem value="Tipo de Empleo" action="/catalogos/tipoEmpleo"/>  
-                </p:submenu>
-                <p:submenu label="Gestión de RRHH">
-                    <p:menuitem value="Empleados" action="/catalogos/empleados"/>  
-                    <p:menuitem value="Planilla" action="/catalogos/planilla"/> 
-                </p:submenu>
-            </p:panelMenu>
-        </h:form>
-        <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
-        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-            <h:outputLabel value="CARGANDO...."/>    
-        </p:dialog>
+        </ui:define>
+       </ui:composition>
     </h:body>
 </html>
 

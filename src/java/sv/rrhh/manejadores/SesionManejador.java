@@ -13,8 +13,6 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import sv.com.rrhh.controladores.UsuarioController;
 import sv.com.rrhh.entidades.Usuario;
 import sv.rrhh.utilidades.UtilidadesManejador;
@@ -45,6 +43,7 @@ public class SesionManejador{
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+    
     
     public void validarUsuario(){
         try {
